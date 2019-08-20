@@ -2,39 +2,28 @@
   "name": "toml",
   "rules": {
     "root": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "pair"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "table"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "table_array"
+          },
+          {
             "type": "SYMBOL",
             "name": "_newline"
           }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_block_pair"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "table"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "table_array"
-              }
-            ]
-          }
-        }
-      ]
+        ]
+      }
     },
     "comment": {
       "type": "PATTERN",
@@ -43,19 +32,6 @@
     "_newline": {
       "type": "PATTERN",
       "value": "(\\r?\\n)+"
-    },
-    "_newline_or_eof": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_newline"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_eof"
-        }
-      ]
     },
     "table": {
       "type": "SEQ",
@@ -83,21 +59,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_newline_or_eof"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_newline"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_block_pair"
-          }
+          "name": "_line_ending_or_eof"
         }
       ]
     },
@@ -127,21 +89,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_newline_or_eof"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_newline"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_block_pair"
-          }
+          "name": "_line_ending_or_eof"
         }
       ]
     },
@@ -154,7 +102,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_newline_or_eof"
+          "name": "_line_ending_or_eof"
         }
       ]
     },
@@ -181,22 +129,6 @@
         {
           "type": "SYMBOL",
           "name": "_inline_value"
-        }
-      ]
-    },
-    "_block_pair": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "pair"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_newline"
-          }
         }
       ]
     },
@@ -860,7 +792,7 @@
   "externals": [
     {
       "type": "SYMBOL",
-      "name": "_eof"
+      "name": "_line_ending_or_eof"
     }
   ],
   "inline": [],

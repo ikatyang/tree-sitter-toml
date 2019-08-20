@@ -129,13 +129,13 @@ key = {
   (pair
     (key)
     (inline_table
-      (MISSING "}")
+      (ERROR)
+      (pair
+        (key) (boolean)
+      )
+      (ERROR)
     )
   )
-  (pair
-    (key) (boolean)
-  )
-  (ERROR)
 )
 
 ================================================================================
@@ -176,8 +176,9 @@ VALID - table - empty content separated by comments
 
 (root
   (table
-    (key) (comment)
+    (key)
   )
+  (comment)
 )
 
 ================================================================================
@@ -192,8 +193,9 @@ VALID - array of tables - empty content separated by comments
 
 (root
   (table_array
-    (key) (comment)
+    (key)
   )
+  (comment)
 )
 
 ================================================================================
@@ -213,13 +215,13 @@ b = 2
 (root
   (table
     (key)
-    (pair
-      (key) (integer)
-    )
-    (comment)
-    (pair
-      (key) (integer)
-    )
+  )
+  (pair
+    (key) (integer)
+  )
+  (comment)
+  (pair
+    (key) (integer)
   )
 )
 
@@ -240,12 +242,12 @@ b = 2
 (root
   (table_array
     (key)
-    (pair
-      (key) (integer)
-    )
-    (comment)
-    (pair
-      (key) (integer)
-    )
+  )
+  (pair
+    (key) (integer)
+  )
+  (comment)
+  (pair
+    (key) (integer)
   )
 )

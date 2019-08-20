@@ -23,45 +23,24 @@ const rfc3339_offset = /([zZ])|([+-]([01][0-9]|2[0-3]):[0-5][0-9])/;
 module.exports = grammar({
   name: "toml",
 
-  externals: $ => [$._eof],
+  externals: $ => [$._line_ending_or_eof],
 
   extras: $ => [$.comment, /[ \t]/],
 
   rules: {
-    root: $ =>
-      seq(
-        repeat($._newline),
-        repeat($._block_pair),
-        repeat(choice($.table, $.table_array))
-      ),
+    root: $ => repeat(choice($.pair, $.table, $.table_array, $._newline)),
 
     comment: $ => /#.*/,
     _newline: $ => newline,
-    _newline_or_eof: $ => choice($._newline, $._eof),
 
     table: $ =>
-      seq(
-        "[",
-        choice($.dotted_key, $.key),
-        "]",
-        $._newline_or_eof,
-        repeat($._newline),
-        repeat($._block_pair)
-      ),
+      seq("[", choice($.dotted_key, $.key), "]", $._line_ending_or_eof),
 
     table_array: $ =>
-      seq(
-        "[[",
-        choice($.dotted_key, $.key),
-        "]]",
-        $._newline_or_eof,
-        repeat($._newline),
-        repeat($._block_pair)
-      ),
+      seq("[[", choice($.dotted_key, $.key), "]]", $._line_ending_or_eof),
 
-    pair: $ => seq($._inline_pair, $._newline_or_eof),
+    pair: $ => seq($._inline_pair, $._line_ending_or_eof),
     _inline_pair: $ => seq(choice($.dotted_key, $.key), "=", $._inline_value),
-    _block_pair: $ => seq($.pair, repeat($._newline)),
 
     key: $ => choice($._bare_key, $._quoted_key),
     dotted_key: $ => seq(choice($.dotted_key, $.key), ".", $.key),
