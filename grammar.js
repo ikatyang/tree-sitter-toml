@@ -31,30 +31,37 @@ module.exports = grammar({
     root: $ =>
       seq(
         repeat($._newline),
-        choice(
-          $._eof,
-          seq(
-            choice($.pair, $._loose_pair, $._pairs, $.table, $.table_array),
-            repeat(choice($.table, $.table_array))
-          )
-        )
+        repeat($._block_pair),
+        repeat(choice($.table, $.table_array))
       ),
 
     comment: $ => /#.*/,
     _newline: $ => newline,
     _newline_or_eof: $ => choice($._newline, $._eof),
 
-    ...table_like("table", "[", "]"),
-    ...table_like("table_array", "[[", "]]"),
+    table: $ =>
+      seq(
+        "[",
+        choice($.dotted_key, $.key),
+        "]",
+        $._newline_or_eof,
+        repeat($._newline),
+        repeat($._block_pair)
+      ),
+
+    table_array: $ =>
+      seq(
+        "[[",
+        choice($.dotted_key, $.key),
+        "]]",
+        $._newline_or_eof,
+        repeat($._newline),
+        repeat($._block_pair)
+      ),
 
     pair: $ => seq($._inline_pair, $._newline_or_eof),
     _inline_pair: $ => seq(choice($.dotted_key, $.key), "=", $._inline_value),
-    _loose_pair: $ => seq(choice($._loose_pair, $.pair), $._newline),
-    _pairs: $ =>
-      seq(
-        choice($.pair, $._loose_pair, $._pairs),
-        choice($.pair, $._loose_pair)
-      ),
+    _block_pair: $ => seq($.pair, repeat($._newline)),
 
     key: $ => choice($._bare_key, $._quoted_key),
     dotted_key: $ => seq(choice($.dotted_key, $.key), ".", $.key),
@@ -212,24 +219,3 @@ module.exports = grammar({
       ),
   },
 });
-
-function table_like(name, header_start, header_end) {
-  const header_name = `_${name}_header`;
-  const loose_header_name = `_loose_${name}_header`;
-  return {
-    [name]: $ =>
-      seq(
-        choice($[header_name], $[loose_header_name]),
-        optional(choice($.pair, $._loose_pair, $._pairs))
-      ),
-    [header_name]: $ =>
-      seq(
-        header_start,
-        choice($.dotted_key, $.key),
-        header_end,
-        $._newline_or_eof
-      ),
-    [loose_header_name]: $ =>
-      seq(choice($[loose_header_name], $[header_name]), $._newline),
-  };
-}
