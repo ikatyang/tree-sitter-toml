@@ -221,6 +221,10 @@
         {
           "type": "key",
           "named": true
+        },
+        {
+          "type": "pair",
+          "named": true
         }
       ]
     }
@@ -239,6 +243,10 @@
         },
         {
           "type": "key",
+          "named": true
+        },
+        {
+          "type": "pair",
           "named": true
         }
       ]

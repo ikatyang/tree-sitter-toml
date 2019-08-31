@@ -44,8 +44,7 @@ invalid_both = 1 .0 e 2
 
 (file
   (ERROR
-    (dotted_key
-      (key) (ERROR) (key))))
+    (key) (integer)))
 
 ================================================================================
 INVALID - offset date time - whitespaces between its components are not allowed
@@ -166,8 +165,7 @@ VALID - table - empty content separated by comments
 
 (file
   (table
-    (key))
-  (comment))
+    (key) (comment)))
 
 ================================================================================
 VALID - array of tables - empty content separated by comments
@@ -181,8 +179,7 @@ VALID - array of tables - empty content separated by comments
 
 (file
   (table_array
-    (key))
-  (comment))
+    (key) (comment)))
 
 ================================================================================
 VALID - table - two pairs separated by comments
@@ -200,12 +197,12 @@ b = 2
 
 (file
   (table
-    (key))
-  (pair
-    (key) (integer))
-  (comment)
-  (pair
-    (key) (integer)))
+    (key)
+    (pair
+      (key) (integer))
+    (comment)
+    (pair
+      (key) (integer))))
 
 ================================================================================
 VALID - array of tables - two pairs separated by comments
@@ -223,9 +220,9 @@ b = 2
 
 (file
   (table_array
-    (key))
-  (pair
-    (key) (integer))
-  (comment)
-  (pair
-    (key) (integer)))
+    (key)
+    (pair
+      (key) (integer))
+    (comment)
+    (pair
+      (key) (integer))))

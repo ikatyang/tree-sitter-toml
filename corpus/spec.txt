@@ -639,17 +639,17 @@ key2 = 456
 
 (file
   (table
-    (key))
-  (pair
-    (key) (string))
-  (pair
-    (key) (integer))
+    (key)
+    (pair
+      (key) (string))
+    (pair
+      (key) (integer)))
   (table
-    (key))
-  (pair
-    (key) (string))
-  (pair
-    (key) (integer)))
+    (key)
+    (pair
+      (key) (string))
+    (pair
+      (key) (integer))))
 
 ================================================================================
 VALID - table - header with dotted key
@@ -663,11 +663,11 @@ type.name = "pug"
 (file
   (table
     (dotted_key
-      (key) (key)))
-  (pair
-    (dotted_key
       (key) (key))
-    (string)))
+    (pair
+      (dotted_key
+        (key) (key))
+      (string))))
 
 ================================================================================
 VALID - table- header with whitespaces
@@ -747,13 +747,13 @@ c = 2
 (file
   (comment)
   (table
-    (key))
-  (pair
-    (key) (integer))
+    (key)
+    (pair
+      (key) (integer)))
   (table
-    (key))
-  (pair
-    (key) (integer)))
+    (key)
+    (pair
+      (key) (integer))))
 
 ================================================================================
 VALID - table - overlapped header key (semantically INVALID)
@@ -772,14 +772,14 @@ c = 2
 (file
   (comment)
   (table
-    (key))
-  (pair
-    (key) (integer))
+    (key)
+    (pair
+      (key) (integer)))
   (table
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (integer)))
+      (key) (key))
+    (pair
+      (key) (integer))))
 
 ================================================================================
 VALID - inline table - basic
@@ -833,21 +833,21 @@ color = "gray"
 
 (file
   (table_array
-    (key))
-  (pair
-    (key) (string))
-  (pair
-    (key) (integer))
+    (key)
+    (pair
+      (key) (string))
+    (pair
+      (key) (integer)))
   (table_array
     (key))
   (table_array
-    (key))
-  (pair
-    (key) (string))
-  (pair
-    (key) (integer))
-  (pair
-    (key) (string)))
+    (key)
+    (pair
+      (key) (string))
+    (pair
+      (key) (integer))
+    (pair
+      (key) (string))))
 
 ================================================================================
 VALID - array of tables - nested arrays of tables
@@ -876,35 +876,35 @@ VALID - array of tables - nested arrays of tables
 
 (file
   (table_array
-    (key))
-  (pair
-    (key) (string))
+    (key)
+    (pair
+      (key) (string)))
   (table
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string))
-  (pair
-    (key) (string))
+      (key) (key))
+    (pair
+      (key) (string))
+    (pair
+      (key) (string)))
   (table_array
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string))
+      (key) (key))
+    (pair
+      (key) (string)))
   (table_array
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string))
+      (key) (key))
+    (pair
+      (key) (string)))
   (table_array
-    (key))
-  (pair
-    (key) (string))
+    (key)
+    (pair
+      (key) (string)))
   (table_array
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string)))
+      (key) (key))
+    (pair
+      (key) (string))))
 
 ================================================================================
 VALID - array of tables - append to statically defined array (semantically INVALID)
@@ -944,17 +944,17 @@ VALID - array of tables - append to table (semantically INVALID)
 (file
   (comment)
   (table_array
-    (key))
-  (pair
-    (key) (string))
+    (key)
+    (pair
+      (key) (string)))
   (table_array
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string))
-  (comment)
+      (key) (key))
+    (pair
+      (key) (string))
+    (comment))
   (table
     (dotted_key
-      (key) (key)))
-  (pair
-    (key) (string)))
+      (key) (key))
+    (pair
+      (key) (string))))
