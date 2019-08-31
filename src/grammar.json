@@ -1,7 +1,7 @@
 {
   "name": "toml",
   "rules": {
-    "file": {
+    "document": {
       "type": "SEQ",
       "members": [
         {
@@ -31,7 +31,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "table_array"
+                "name": "table_array_element"
               }
             ]
           }
@@ -88,7 +88,7 @@
         }
       ]
     },
-    "table_array": {
+    "table_array_element": {
       "type": "SEQ",
       "members": [
         {

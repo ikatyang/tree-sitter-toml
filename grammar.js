@@ -26,10 +26,10 @@ module.exports = grammar({
   extras: $ => [$.comment, /[ \t]/],
 
   rules: {
-    file: $ =>
+    document: $ =>
       seq(
         repeat(choice($.pair, newline)),
-        repeat(choice($.table, $.table_array)),
+        repeat(choice($.table, $.table_array_element)),
       ),
 
     comment: $ => /#.*/,
@@ -43,7 +43,7 @@ module.exports = grammar({
         repeat(choice($.pair, newline)),
       ),
 
-    table_array: $ =>
+    table_array_element: $ =>
       seq(
         "[[",
         choice($.dotted_key, $.key),
