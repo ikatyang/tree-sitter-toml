@@ -1,0 +1,23 @@
+str1 = "I'm a string. \"You can quote me\". Name\tJos\u00E9\nLocation\tSF."
+winpath = 'C:\Users\nodejs\templates'
+num = +99 # This is a TOML document.
+float = +1.0
+bool = true
+"quoted key" = 20
+
+[inner]
+odt = 1979-05-27T07:32:00Z
+ldt = 1979-05-27T07:32:00
+
+[[inner.inner]]
+array = [ 1979-05-27, 00:32:00.999999 ]
+dict.inner = { a = 10, b = 20 }
+key2 = { "dog": { "tater.man": { "type": { "name": "pug" } } } }
+
+[ g .  h  . i ]    # same as [g.h.i]
+
+[ j . "ʞ" . 'l' ]  # same as [j."ʞ".'l']
+
+points = [ { x = 1, y = 2, z = 3 },
+           { x = 7, y = 8, z = 9 },
+           { x = 2, y = 4, z = 8 } ]
