@@ -6,7 +6,7 @@ const getInverseRegex = charset =>
 const control_chars = new Charset([0x0, 0x1f], 0x7f);
 const newline = /\r?\n/;
 
-const decimal_integer = /[+-]?(0|[1-9](_?[0-9])*)/;
+const decimal_integer = /[+-]?((0|[1-9])(_?[0-9])*)/;
 const hexadecimal_integer = /0x[0-9a-fA-F](_?[0-9a-fA-F])*/;
 const octal_integer = /0o[0-7](_?[0-7])*/;
 const binary_integer = /0b[01](_?[01])*/;
@@ -34,31 +34,41 @@ module.exports = grammar({
 
     comment: $ => /#.*/,
 
+    open_sqr: $ => '[',
+    clos_sqr: $ => ']',
+    open_tba: $ => '[[',
+    clos_tba: $ => ']]',
+    open_crl: $ => '{',
+    clos_crl: $ => '}',
+    equal: $ => '=',
+    dot: $ => '.',
+    comma: $ => ',',
+
     table: $ =>
       seq(
-        "[",
+        $.open_sqr,
         choice($.dotted_key, $.key),
-        "]",
+        $.clos_sqr,
         $._line_ending_or_eof,
         repeat(choice($.pair, newline)),
       ),
 
     table_array_element: $ =>
       seq(
-        "[[",
+        $.open_tba,
         choice($.dotted_key, $.key),
-        "]]",
+        $.clos_tba,
         $._line_ending_or_eof,
         repeat(choice($.pair, newline)),
       ),
 
     pair: $ => seq($._inline_pair, $._line_ending_or_eof),
-    _inline_pair: $ => seq(choice($.dotted_key, $.key), "=", $._inline_value),
+    _inline_pair: $ => seq(choice($.dotted_key, $.key), $.equal, $._inline_value),
 
-    key: $ => choice($._bare_key, $._quoted_key),
-    dotted_key: $ => seq(choice($.dotted_key, $.key), ".", $.key),
+    key: $ => choice($._bare_key, $.quoted_key),
+    dotted_key: $ => seq(choice($.dotted_key, $.key), $.dot, $.key),
     _bare_key: $ => /[A-Za-z0-9_-]+/,
-    _quoted_key: $ => choice($._basic_string, $._literal_string),
+    quoted_key: $ => choice($._basic_string, $._literal_string),
 
     _inline_value: $ =>
       choice(
@@ -171,29 +181,31 @@ module.exports = grammar({
 
     array: $ =>
       seq(
-        "[",
+        $.open_sqr,
         repeat(newline),
         optional(
           seq(
             $._inline_value,
             repeat(newline),
-            repeat(seq(",", repeat(newline), $._inline_value, repeat(newline))),
-            optional(seq(",", repeat(newline))),
+            repeat(
+                seq($.comma, repeat(newline), $._inline_value, repeat(newline))
+            ),
+            optional(seq($.comma, repeat(newline))),
           ),
         ),
-        "]",
+        $.clos_sqr,
       ),
 
     inline_table: $ =>
       seq(
-        "{",
+        $.open_crl,
         optional(
           seq(
             alias($._inline_pair, $.pair),
-            repeat(seq(",", alias($._inline_pair, $.pair))),
+            repeat(seq($.comma, alias($._inline_pair, $.pair))),
           ),
         ),
-        "}",
+        $.clos_crl,
       ),
   },
 });
