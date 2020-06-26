@@ -5,7 +5,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "array",
@@ -13,6 +13,14 @@
         },
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "clos_sqr",
+          "named": true
+        },
+        {
+          "type": "comma",
           "named": true
         },
         {
@@ -41,6 +49,10 @@
         },
         {
           "type": "offset_date_time",
+          "named": true
+        },
+        {
+          "type": "open_sqr",
           "named": true
         },
         {
@@ -82,6 +94,10 @@
       "required": true,
       "types": [
         {
+          "type": "dot",
+          "named": true
+        },
+        {
           "type": "dotted_key",
           "named": true
         },
@@ -103,8 +119,20 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "clos_crl",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "open_crl",
+          "named": true
+        },
         {
           "type": "pair",
           "named": true
@@ -122,11 +150,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
-          "type": "escape_sequence",
+          "type": "quoted_key",
           "named": true
         }
       ]
@@ -150,6 +178,10 @@
         },
         {
           "type": "dotted_key",
+          "named": true
+        },
+        {
+          "type": "equal",
           "named": true
         },
         {
@@ -192,6 +224,21 @@
     }
   },
   {
+    "type": "quoted_key",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "string",
     "named": true,
     "fields": {},
@@ -215,11 +262,19 @@
       "required": true,
       "types": [
         {
+          "type": "clos_sqr",
+          "named": true
+        },
+        {
           "type": "dotted_key",
           "named": true
         },
         {
           "type": "key",
+          "named": true
+        },
+        {
+          "type": "open_sqr",
           "named": true
         },
         {
@@ -238,11 +293,19 @@
       "required": true,
       "types": [
         {
+          "type": "clos_tba",
+          "named": true
+        },
+        {
           "type": "dotted_key",
           "named": true
         },
         {
           "type": "key",
+          "named": true
+        },
+        {
+          "type": "open_tba",
           "named": true
         },
         {
@@ -269,35 +332,31 @@
     "named": false
   },
   {
-    "type": ",",
-    "named": false
-  },
-  {
-    "type": ".",
-    "named": false
-  },
-  {
-    "type": "=",
-    "named": false
-  },
-  {
-    "type": "[",
-    "named": false
-  },
-  {
-    "type": "[[",
-    "named": false
-  },
-  {
-    "type": "]",
-    "named": false
-  },
-  {
-    "type": "]]",
-    "named": false
-  },
-  {
     "type": "boolean",
+    "named": true
+  },
+  {
+    "type": "clos_crl",
+    "named": true
+  },
+  {
+    "type": "clos_sqr",
+    "named": true
+  },
+  {
+    "type": "clos_tba",
+    "named": true
+  },
+  {
+    "type": "comma",
+    "named": true
+  },
+  {
+    "type": "dot",
+    "named": true
+  },
+  {
+    "type": "equal",
     "named": true
   },
   {
@@ -321,11 +380,15 @@
     "named": true
   },
   {
-    "type": "{",
-    "named": false
+    "type": "open_crl",
+    "named": true
   },
   {
-    "type": "}",
-    "named": false
+    "type": "open_sqr",
+    "named": true
+  },
+  {
+    "type": "open_tba",
+    "named": true
   }
 ]
