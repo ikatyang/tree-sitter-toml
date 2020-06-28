@@ -371,11 +371,8 @@
                 }
               },
               {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\"{1,2}"
-                }
+                "type": "SYMBOL",
+                "name": "_multiline_basic_string_content"
               },
               {
                 "type": "IMMEDIATE_TOKEN",
@@ -401,11 +398,8 @@
           }
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "\"{0,2}\"\"\""
-          }
+          "type": "SYMBOL",
+          "name": "_multiline_basic_string_end"
         }
       ]
     },
@@ -489,11 +483,8 @@
                 }
               },
               {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "'{1,2}"
-                }
+                "type": "SYMBOL",
+                "name": "_multiline_literal_string_content"
               },
               {
                 "type": "IMMEDIATE_TOKEN",
@@ -506,11 +497,8 @@
           }
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "'{0,2}'''"
-          }
+          "type": "SYMBOL",
+          "name": "_multiline_literal_string_end"
         }
       ]
     },
@@ -821,6 +809,22 @@
     {
       "type": "SYMBOL",
       "name": "_line_ending_or_eof"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_multiline_basic_string_content"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_multiline_basic_string_end"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_multiline_literal_string_content"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_multiline_literal_string_end"
     }
   ],
   "inline": [],

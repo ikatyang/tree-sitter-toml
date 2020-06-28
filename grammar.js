@@ -22,7 +22,13 @@ const rfc3339_offset = /([zZ])|([+-]([01][0-9]|2[0-3]):[0-5][0-9])/;
 module.exports = grammar({
   name: "toml",
 
-  externals: $ => [$._line_ending_or_eof],
+  externals: $ => [
+    $._line_ending_or_eof,
+    $._multiline_basic_string_content,
+    $._multiline_basic_string_end,
+    $._multiline_literal_string_content,
+    $._multiline_literal_string_end,
+  ],
 
   extras: $ => [$.comment, /[ \t]/],
 
@@ -108,13 +114,13 @@ module.exports = grammar({
                 getInverseRegex(control_chars.subtract("\t").union('"', "\\")),
               ),
             ),
-            token.immediate(/"{1,2}/),
+            $._multiline_basic_string_content,
             token.immediate(newline),
             $.escape_sequence,
             alias($._escape_line_ending, $.escape_sequence),
           ),
         ),
-        token.immediate(/"{0,2}"""/),
+        $._multiline_basic_string_end,
       ),
     escape_sequence: $ =>
       token.immediate(/\\([btnfr"\\]|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})/),
@@ -137,11 +143,11 @@ module.exports = grammar({
             token.immediate(
               repeat1(getInverseRegex(control_chars.union("'").subtract("\t"))),
             ),
-            token.immediate(/'{1,2}/),
+            $._multiline_literal_string_content,
             token.immediate(newline),
           ),
         ),
-        token.immediate(/'{0,2}'''/),
+        $._multiline_literal_string_end,
       ),
 
     integer: $ =>
