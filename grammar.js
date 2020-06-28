@@ -7,11 +7,12 @@ const control_chars = new Charset([0x0, 0x1f], 0x7f);
 const newline = /\r?\n/;
 
 const decimal_integer = /[+-]?(0|[1-9](_?[0-9])*)/;
+const decimal_integer_in_float_exponent_part = /[+-]?[0-9](_?[0-9])*/; // allow leading zeros
 const hexadecimal_integer = /0x[0-9a-fA-F](_?[0-9a-fA-F])*/;
 const octal_integer = /0o[0-7](_?[0-7])*/;
 const binary_integer = /0b[01](_?[01])*/;
 const float_fractional_part = /[.][0-9](_?[0-9])*/;
-const float_exponent_part = seq(/[eE]/, decimal_integer);
+const float_exponent_part = seq(/[eE]/, decimal_integer_in_float_exponent_part);
 
 const rfc3339_date = /([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])/;
 const rfc3339_delimiter = /[ tT]/;
@@ -32,7 +33,8 @@ module.exports = grammar({
         repeat(choice($.table, $.table_array_element)),
       ),
 
-    comment: $ => /#.*/,
+    comment: $ =>
+      token(seq("#", repeat(getInverseRegex(control_chars.subtract("\t"))))),
 
     table: $ =>
       seq(
@@ -87,7 +89,9 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(
-              repeat1(getInverseRegex(control_chars.union('"', "\\"))),
+              repeat1(
+                getInverseRegex(control_chars.subtract("\t").union('"', "\\")),
+              ),
             ),
             $.escape_sequence,
           ),
@@ -100,7 +104,9 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(
-              repeat1(getInverseRegex(control_chars.union('"', "\\"))),
+              repeat1(
+                getInverseRegex(control_chars.subtract("\t").union('"', "\\")),
+              ),
             ),
             token.immediate(/"{1,2}/),
             token.immediate(newline),
@@ -108,7 +114,7 @@ module.exports = grammar({
             alias($._escape_line_ending, $.escape_sequence),
           ),
         ),
-        token.immediate('"""'),
+        token.immediate(/"{0,2}"""/),
       ),
     escape_sequence: $ =>
       token.immediate(/\\([btnfr"\\]|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})/),
@@ -135,7 +141,7 @@ module.exports = grammar({
             token.immediate(newline),
           ),
         ),
-        token.immediate("'''"),
+        token.immediate(/'{0,2}'''/),
       ),
 
     integer: $ =>
