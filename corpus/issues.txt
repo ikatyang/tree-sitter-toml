@@ -14,6 +14,6 @@ another = "# This is not a comment"
     (bare_key)
     (string)
     (comment))
-  (ERROR
+  (pair
     (bare_key)
-    (comment)))
+    (string)))
