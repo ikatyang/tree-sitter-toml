@@ -3,3 +3,4 @@
 
 /bindings/rust
 /Cargo.toml
+.build/
