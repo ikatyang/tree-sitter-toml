@@ -16,9 +16,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "prepare": "node-gyp rebuild",
-    "test": "yarn tree-sitter test",
-    "prepack": "yarn tree-sitter generate",
+    "lint": "prettier --check .",
+    "test:grammar": "pnpm run tree-sitter test",
+    "test:binding-node": "node-gyp rebuild && TODO",
+    "generate": "pnpm run tree-sitter generate",
     "release": "standard-version",
     "tree-sitter": "./tree-sitter/target/release/tree-sitter"
   },
